@@ -7,11 +7,14 @@ const { SECRET_KEY } = require('../../config');
 const User = require('../../models/User');
 
 function generateToken(user){
-    return jwt.sign({
-        id: res.id,
-        email: res.email,
-        username: res.username
-    }, SECRET_KEY, { expiresIn: '1h' });
+    return jwt.sign(
+        {
+            id: user.id,
+            email: user.email,
+            username: user.username
+        },
+        SECRET_KEY,
+        { expiresIn: '1h' });
 }
 
 module.exports = {
@@ -30,7 +33,7 @@ module.exports = {
                 throw new UserInputError('User not found', { errors });
             }
 
-            const match = await bcrypt.compare(password.user.password);
+            const match = await bcrypt.compare(password, user.password);
             if(!match){
                 errors.general = 'Invalid credentials';
                 throw new UserInputError('Invalid credentials', { errors });
@@ -79,7 +82,7 @@ module.exports = {
                 ...res._doc,
                 id: res._id,
                 token
-            }
+            };
         }
     }
-}
+};
