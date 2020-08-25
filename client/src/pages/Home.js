@@ -15,14 +15,14 @@ function Home() {
 
     return (
         <Grid columns={3}>
-            <Grid.Row>
+            <Grid.Row centered>
                 <h2>Recent Posts</h2>
             </Grid.Row>
             <Grid.Row>
                 {loading ? (
                     <h3>Loading posts...</h3>
                 ) : (posts && posts.map((post) => (
-                        <Grid.Column key={post.id}>
+                        <Grid.Column key={post.id} style={{marginBottom:20}}>
                             <PostCard post={post}/>
                         </Grid.Column>
                     ))
